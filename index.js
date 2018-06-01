@@ -15,6 +15,7 @@ const ds = new DailySketch({
 });
 
 require('./commands')(bot);
+require('./utils/conversions')(bot);
 
 bot.on('guildMemberRemove', member => {
 	bot.channels.get('382635966495588357').send(`<@${member.id}> is no longer in this server`);

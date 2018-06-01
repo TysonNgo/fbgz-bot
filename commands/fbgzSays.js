@@ -14,6 +14,7 @@ module.exports = {
 	description: '`.fbgzSays` - get a random fbgz quote',
 	exec: msg => {
 		let fbgz = new JsonFileManager('fbgz.json').load();
+		if (!fbgz.quotes.length) return msg.reply('there are 0 quotes');
 		if (!quoteIndexes.length){
 			quoteIndexes = Array.apply(null, Array(fbgz.quotes.length)).map((x, i) => { return i; });
 			shuffle(quoteIndexes);
