@@ -9,15 +9,23 @@ module.exports = {
 			msg.channel.send(
 				`<@${msg.author.id}>\n`+
 				charShift(re.exec(msg.content)[1])).then(msg =>{
-					msg.react("🔎").then(msg=>{
-					msg.message.react("🇸").then(msg=>{
-					msg.message.react("🇵").then(msg=>{
-					msg.message.react("🇴").then(msg=>{
-					msg.message.react("🇮").then(msg=>{
-					msg.message.react("🇱").then(msg=>{
-					msg.message.react("🇪").then(msg=>{
-					msg.message.react("🇷").then(msg=>{
-					})})})})})})})});
+					let emojis = [
+						msg.react('🔎'),
+						'🇸', '🇵', '🇴', '🇮', '🇱', '🇪', '🇷'];
+					emojis.reduce((a, b) => a.then(r => r.message.react(b)));
+					msg.awaitReactions((reaction, user) => {
+						if (!reaction.me) return;
+						let content = reaction.message.content.split('\n').pop();
+						if (reaction.message.reactions.first()._emoji.name == '🔎'){
+							if (!user.dmChannel){
+								user.createDM().then(dm => {
+									dm.send(charShift(content, reverse=true));
+								});
+							}else{
+								user.dmChannel.send(charShift(content, reverse=true));
+							}
+						}
+					})
 			});
 		});
 	}

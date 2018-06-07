@@ -21,19 +21,4 @@ bot.on('guildMemberRemove', member => {
 	bot.channels.get('382635966495588357').send(`<@${member.id}> is no longer in this server`);
 })
 
-const charShift = require('./utils/charShift');
-bot.on('messageReactionAdd', (reaction, user) => {
-	if (!reaction.me) return;
-	// spoiler command
-	if (reaction.message.reactions.first()._emoji.name == '🔎'){
-		if (!user.dmChannel){
-			user.createDM().then(dm => {
-				dm.send(charShift(reaction.message.content, reverse=true));
-			});
-		}else{
-			user.dmChannel.send(charShift(reaction.message.content, reverse=true));
-		}
-	}
-});
-
 bot.login(DISCORD_TOKEN);
