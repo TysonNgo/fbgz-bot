@@ -31,7 +31,7 @@ module.exports = {
 						concatMsgs = m.content + (concatMsgs ? '\n' + concatMsgs : '');
 						let r = fuzz.partial_ratio(m.content, quote.quote);
 
-						if (fuzz.ratio(q[1], concatMsgs) === 100){
+						if (fuzz.ratio(q[1], concatMsgs) === 100 || fuzz.ratio(q[1], m.content) === 100){
 							return resolve();
 						} else if (r >= 70){
 							result = m.content + (result ? '\n'+result : '');
