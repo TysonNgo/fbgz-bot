@@ -6,14 +6,19 @@ module.exports = {
 	cmdRe: re,
 	description: '`.fbgzSays add "<quote>" - <name> <year>` - adds a fbgz quote',
 	exec: msg => {
-		let jfm = new JsonFileManager('fbgz.json');
-		let fbgz = jfm.load();
-		let quote = {
-			quote: re.exec(msg.content)[1],
-			added_by: msg.author.id,
-		};
-		const quoteRe = /^"((.|\n)*)" - (.*) \d{4}$/;
-		if (quoteRe.test(quote.quote)){
+		const quoteRe = /^"((.|\n)*)" - (.*) (\d{4})$/;
+		if (quoteRe.test(re.exec(msg.content)[1])){
+			const q = quoteRe.exec(re.exec(msg.content)[1]);
+			let jfm = new JsonFileManager('fbgz.json');
+			let fbgz = jfm.load();
+			const by = q[3].toLowerCase();
+			let quote = {
+				quote: q[1],
+				by: by,
+				year: q[4],
+				by_id: fbgz.names[by] || null,
+				added_by: msg.author.id
+			};
 			// search latest messages in channel for matching quote
 			new Promise((resolve, reject) => {
 				// CHANGE THIS HARDCODED VALUE LATER
@@ -23,7 +28,6 @@ module.exports = {
 				.then(msgs => {
 					let concatMsgs = '';
 					let result = '';
-					let q = quoteRe.exec(quote.quote);
 					msgs = Array.from(msgs).map(i => i[1]);
 					for (let i = 0; i < msgs.length; i++){
 						let m = msgs[i];
@@ -48,7 +52,7 @@ module.exports = {
 							m.react('🇳');});
 							m.awaitReactions((reaction, user) => {
 								if (reaction.emoji.name === '🇾' && user.id === msg.author.id){
-									quote.quote = q[0].replace(q[1], result);
+									quote.quote = result;
 									m.delete();
 									resolve();
 								} else if (reaction.emoji.name === '🇳' && user.id === msg.author.id){
@@ -66,7 +70,7 @@ module.exports = {
 						fbgz.quotes = [quote];
 					}
 					jfm.save(fbgz);
-					msg.reply(`\n\`\`\`${quoteRe.exec(quote.quote)[1]}\`\`\`\nquote added`);
+					msg.reply(`\n\`\`\`${quote.quote}\`\`\`\nquote added`);
 				})
 				.catch(e => {
 					if (e) msg.reply(e);

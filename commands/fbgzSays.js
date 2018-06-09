@@ -18,6 +18,24 @@ module.exports = {
 			quoteIndexes = Array.apply(null, Array(fbgz.quotes.length)).map((x, i) => { return i; });
 			shuffle(quoteIndexes);
 		}
-		msg.channel.send(fbgz.quotes[quoteIndexes.pop()].quote);
+		const q = fbgz.quotes[quoteIndexes.pop()];
+		let color = 0xFFFFFF;
+		const member = msg.guild.members.get(q.by_id);
+		if (member){
+			color = member.displayColor;
+		}
+		msg.channel.send({
+			embed: {
+				color: color,
+				description: q.quote,
+				author: {
+					name: q.by.replace(/^([a-z])/, c => c.toUpperCase()),
+
+				},
+				footer: {
+					text: `- ${q.year}`
+				}
+			}
+		});
 	}
 }
