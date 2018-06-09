@@ -66,7 +66,7 @@ module.exports = {
 						fbgz.quotes = [quote];
 					}
 					jfm.save(fbgz);
-					msg.reply("quote added")
+					msg.reply(`\n\`\`\`${quoteRe.exec(quote.quote)[1]}\`\`\`\nquote added`);
 				})
 				.catch(e => {
 					if (e) msg.reply(e);
