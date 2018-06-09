@@ -20,9 +20,11 @@ module.exports = {
 		}
 		const q = fbgz.quotes[quoteIndexes.pop()];
 		let color = 0xFFFFFF;
+		let icon_url;
 		const member = msg.guild.members.get(q.by_id);
 		if (member){
 			color = member.displayColor;
+			icon_url = member.user.avatarURL;
 		}
 		msg.channel.send({
 			embed: {
@@ -30,7 +32,7 @@ module.exports = {
 				description: q.quote,
 				author: {
 					name: q.by.replace(/^([a-z])/, c => c.toUpperCase()),
-
+					icon_url: icon_url
 				},
 				footer: {
 					text: `- ${q.year}`
