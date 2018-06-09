@@ -21,11 +21,12 @@ module.exports = {
 		const q = fbgz.quotes[quoteIndexes.pop()];
 		let color = 0xFFFFFF;
 		let icon_url;
-		const member = msg.guild.members.get(q.by_id);
-		if (member){
+		let member;
+		try{
+			member = msg.guild.members.get(q.by_id);
 			color = member.displayColor;
 			icon_url = member.user.avatarURL;
-		}
+		} catch(e) {}
 		msg.channel.send({
 			embed: {
 				color: color,
