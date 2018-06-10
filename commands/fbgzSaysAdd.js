@@ -39,6 +39,7 @@ module.exports = {
 							return resolve();
 						} else if (r >= 70){
 							result = m.content + (result ? '\n'+result : '');
+							if (r >= 90) break;
 						} else {
 							concatMsgs = '';
 						}
