@@ -1,8 +1,10 @@
+const escape = require('../utils/reEscape');
+const { prefix } = require('../config');
 const JsonFileManager = require('../utils/JsonFileManager');
 
 module.exports = {
-	cmdRe: /^\.fbgzSays stats$/,
-	description: '\`.fbgzSays stats\` - displays the amount of quotes everyone has added',
+	cmdRe: new RegExp(`^${escape(prefix)}fbgzSays stats$`),
+	description: `\`${prefix}fbgzSays stats\` - displays the amount of quotes everyone has added`,
 	exec: msg => {
 		let members = msg.guild.members;
 		let fbgz = new JsonFileManager('fbgz.json').load();

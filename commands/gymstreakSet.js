@@ -1,9 +1,11 @@
+const escape = require('../utils/reEscape');
+const { prefix } = require('../config');
 const JsonFileManager = require('../utils/JsonFileManager');
 
-let re = /^\.gymstreak *= *(\d+)$/;
+let re = new RegExp(`^${escape(prefix)}gymstreak *= *(\\d+)$`);
 module.exports = {
 	cmdRe: re,
-	description: '`.gymstreak = <int>` - sets your gym streak in days',
+	description: `\`${prefix}gymstreak = <int>\` - sets your gym streak in days`,
 	exec: msg => {
 		const jfm = new JsonFileManager('gymstreak.json');
 		let streaks = jfm.load();

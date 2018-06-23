@@ -1,10 +1,12 @@
+const escape = require('../utils/reEscape');
+const { prefix } = require('../config');
 const sharp = require('sharp');
 const request = require('request').defaults({ encoding: null });
 
-let re = /^.widify( +<:.*?:\d+>)?( +\d+)?$/;
+let re = new RegExp(`^${escape(prefix)}widify( +<:.*?:\\d+>)?( +\\d+)?$`);
 module.exports = {
 	cmdRe: re,
-	description: '`.widify <emoji> <widen factor>` - widens an image or non-unicode emoji; <emoji> and <widen factor> are optional',
+	description: `\`${prefix}widify <emoji> <widen factor>\` - widens an image or non-unicode emoji; <emoji> and <widen factor> are optional`,
 	exec: msg => {
 	    let match = re.exec(msg.content);
 	    let emoji = match[1] ? /\d+/.exec(match[1])[0] : null;

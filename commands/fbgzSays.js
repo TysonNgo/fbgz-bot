@@ -1,3 +1,5 @@
+const escape = require('../utils/reEscape');
+const { prefix } = require('../config');
 const JsonFileManager = require('../utils/JsonFileManager');
 let quoteIndexes = [];
 
@@ -9,8 +11,8 @@ function shuffle(a) {
 }
 
 module.exports = {
-	cmdRe: /^\.fbgzSays$/,
-	description: '`.fbgzSays` - get a random fbgz quote',
+	cmdRe: new RegExp(`^${escape(prefix)}fbgzSays$`),
+	description: `\`${prefix}fbgzSays\` - get a random fbgz quote`,
 	exec: msg => {
 		let fbgz = new JsonFileManager('fbgz.json').load();
 		if (!fbgz.quotes.length) return msg.reply('there are 0 quotes');

@@ -1,8 +1,10 @@
+const escape = require('../utils/reEscape');
+const { prefix } = require('../config');
 const JsonFileManager = require('../utils/JsonFileManager');
 
 module.exports = {
-	cmdRe: /^\.weight all$/,
-	description: '`.weight all` - get everyone\'s current and goal weight',
+	cmdRe: new RegExp(`^${escape(prefix)}weight all$`),
+	description: `\`${prefix}weight all\` - get everyone\'s current and goal weight`,
 	exec: msg => {
 		const weights = new JsonFileManager('bodyweight.json').load();
 		let result = '';

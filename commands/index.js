@@ -1,5 +1,7 @@
+const escape = require('../utils/reEscape');
+const { prefix } = require('../config');
 const fs = require('fs');
-const helpRe = /^\.help$/;
+const helpRe = new RegExp(`^${escape(prefix)}help$`);
 
 module.exports = bot => {
 	let helpDescriptions = [];

@@ -1,10 +1,12 @@
+const escape = require('../utils/reEscape');
+const { prefix } = require('../config');
 const fuzz = require('fuzzball');
 const JsonFileManager = require('../utils/JsonFileManager');
 
-const re = /^\.fbgzSays add ((.|\n)*)$$/;
+const re = new RegExp(`^${escape(prefix)}fbgzSays add ((.|\\n)*)$`);
 module.exports = {
 	cmdRe: re,
-	description: '`.fbgzSays add "<quote>" - <name> <year>` - adds a fbgz quote',
+	description: `\`${prefix}fbgzSays add "<quote>" - <name> <year>\` - adds a fbgz quote`,
 	exec: msg => {
 		const quoteRe = /^"((.|\n)*)" - (.*) (\d{4})$/;
 		if (quoteRe.test(re.exec(msg.content)[1])){

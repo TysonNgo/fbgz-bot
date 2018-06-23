@@ -17,11 +17,12 @@ function calcORM(w, r){
 
 	return Math.floor(result/Object.keys(oneRepMaxes).length);
 }
-
-const re = /^\.1rm (\d+)x(\d+)$/;
+const escape = require('../utils/reEscape');
+const prefix = require('../config').prefix;
+const re = new RegExp(`^${escape(prefix)}1rm (\\d+)x(\\d+)$`);
 module.exports = {
 	cmdRe: re,
-	description: '`.1rm <weight>x<reps>` - computes 1 rep max given weight x reps',
+	description: `\`${prefix}1rm <weight>x<reps>\` - computes 1 rep max given weight x reps`,
 	exec: msg => {
 		let params = re.exec(msg.content);
 		let w = Number(params[1]);
