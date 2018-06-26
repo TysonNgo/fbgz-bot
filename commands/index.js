@@ -13,6 +13,9 @@ module.exports = bot => {
 			helpDescriptions.push(cmd.description);
 			bot.on('message', msg => {
 				if (msg.author.bot || msg.channel.type === 'dm') return;
+				if (cmd.blacklist && ~cmd.blacklist.indexOf(msg.author.id)){
+					return msg.reply('you cannot use this command.');
+				}
 				if (cmd.cmdRe.test(msg.content)){
 					cmd.exec(msg);
 				}
