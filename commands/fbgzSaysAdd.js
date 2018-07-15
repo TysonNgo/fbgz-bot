@@ -1,6 +1,6 @@
 const escape = require('../utils/reEscape');
 const { prefix } = require('../config');
-const fuzz = require('fuzzball');
+//const fuzz = require('fuzzball');
 const JsonFileManager = require('../utils/JsonFileManager');
 
 const re = new RegExp(`^${escape(prefix)}fbgzSays add ((.|\\n)*)$`);
@@ -23,6 +23,8 @@ module.exports = {
 			};
 			// search latest messages in channel for matching quote
 			new Promise((resolve, reject) => {
+				return resolve();
+				/*
 				// CHANGE THIS HARDCODED VALUE LATER
 				if (msg.author.id === '101788430479925248') return resolve();
 
@@ -65,6 +67,7 @@ module.exports = {
 							}, {time: 10000})
 						});
 				})
+				*/
 			})
 				.then(() => {
 					if (fbgz.quotes){
