@@ -10,15 +10,20 @@ const ANILIST_CLIENT_ID = process.env["ANILIST_CLIENT_ID"];
 const ANILIST_CLIENT_SECRET = process.env["ANILIST_CLIENT_SECRET"];
 
 const DailySketch = require('./Discord-Daily-Sketch-Bot/DailySketch.js');
-const DailySketchMALChar = require('./Discord-Daily-Sketch-Bot-MAL-Char/DailySketch.js');
 const ds = new DailySketch({
 	discord_client: bot,
 	anilist_client_id: ANILIST_CLIENT_ID,
 	anilist_client_secret: ANILIST_CLIENT_SECRET
 });
-const dsMALChar = new DailySketchMALChar({
+// const DailySketchMALChar = require('./Discord-Daily-Sketch-Bot-MAL-Char/DailySketch.js');
+// const dsMALChar = new DailySketchMALChar({
+// 	discord_client: bot
+// });
+const DailySketchDanbooru = require('./Discord-Daily-Sketch-Bot-Danbooru/DailySketch.js');
+const dsDanbooru = new DailySketchDanbooru({
 	discord_client: bot
 });
+
 
 require('./commands')(bot);
 require('./utils/conversions')(bot);
